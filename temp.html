@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flipping Glassmorphism Card</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    .vignette-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .vignette-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vignette-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .vignette-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.5) 85%, rgba(0, 0, 0, 0.8) 100%);
+      pointer-events: none;
+    }
+
+    .flip-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 200px;
+      perspective: 1000px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform: rotateY(0);
+      transition: transform 0.6s;
+    }
+
+    .flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card h1 {
+      font-size: 1.5rem;
+      /* text-shadow: 0px 0px 10px rgba(0, 0, 0, 1); */
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .flip-card p {
+      font-size: 1rem;
+    }
+
+    .flip-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .flip-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="vignette-container">
+    <img src="./wood.jpg" alt="Background Image">
+
+    <!-- Flipping Card -->
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <!-- Front of Card -->
+        <div class="flip-card-front">
+          <h1 style="text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);">Front Side</h1>
+          <button class="flip-button" onclick="flipCard()">Flip to Back</button>
+        </div>
+        <!-- Back of Card -->
+        <div class="flip-card-back">
+          <h1>Back Side</h1>
+          <button class="flip-button" onclick="flipCard()">Flip to Front</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function flipCard() {
+      const cardInner = document.querySelector('.flip-card-inner');
+      cardInner.classList.toggle('flipped');
+    }
+  </script>
+</body>
+</html>
